@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+  build:
+    commands:
+      - echo "Building frontend (static files)..."
+  post_build:
+    commands:
+      - echo "Deploying to S3..."
+      - aws s3 sync frontend/ s3://taketwoint-bucket/ --delete
+
+artifacts:
+  files:
+    - '**/*'
