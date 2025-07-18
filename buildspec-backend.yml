@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+  build:
+    commands:
+      - echo "Packaging Lambda function..."
+      - cd backend
+      - zip -r ../lambda.zip .
+      - cd ..
+  post_build:
+    commands:
+      - echo "Updating Lambda function..."
+      - aws lambda update-function-code --function-name taketwo-function --zip-file fileb://lambda.zip
+
+artifacts:
+  files:
+    - lambda.zip
